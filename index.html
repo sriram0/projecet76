@@ -120,7 +120,7 @@
                 <a href="#" id="pr5N" onclick="swap('pr6')">Next</a>
             </label>
         </div>
-        <div id="pr5s1">
+        <div id="pr5s1"> <!---------------------------------------------------------------------------------------------------------------------------------------------Problem: when you get upto here and you've collected atleast one sample, and then you click next, it just goes black. Scroll down to see JavaScript for this part-->
             <label id="pr5s1L">
                 
                 <br><br>
@@ -136,6 +136,7 @@
         </div>
     </body>
     <script>
+        //info object. Scroll further to see JavaScript related to problem
         var info = {
             rock: false,
             meteorite: false,
@@ -161,6 +162,7 @@
                         document.getElementById("pr3s1L").setAttribute("onclick", "swap('pr4')");
                     }
                 case "pr5":
+                    //////////////////////////////////////////////JavaScript code related to the problem.
                     if(info.rock || info.meteorite){
                         document.getElementById("pr5N").setAttribute("onclick", "swap(pr5s1)");
                         if(info.rock && info.meteorite){
