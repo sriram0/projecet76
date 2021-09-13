@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Terraformer - Early Version</title>
+        <style>
+            div{
+                visibility: hidden;
+            }
+            #menu{
+                visibility: visible;
+            }
+            div label{
+                width: 30%;
+                color: green;
+                font-family: monospace;
+                padding: 5px;
+            }
+            a{
+                color: blue;
+            }
+            a:hover{
+                color: red;
+            }
+            a:active{
+                color: grey;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="menu">
+            <h1>Welcome!</h1>
+            <button onclick="change('start')"><a href="#">Start a new game</a></button> <span> | OR | </span> <button onclick="swap('early')"><a href="#">Continue a new game</a></button>
+        </div>
+        <div id="start">
+            <label>
+                You are the leader of the Second Home Project. 
+                Your goal is to terraform mars and make it a second home for humanity.
+                Your rocket landed on Mar's north pole. 
+                You have brought 6 founding colonists, some food and water, as well as a year's (earth year) worth of oxygen with you.
+                In the first two days, the colonists set up power, a shelter and a rover. 
+                The Second Home Project is off to a great start, but food and water won't last forever...
+                <br><br>
+                Task:<br>
+                Figure out how to make food 
+                <br><br>
+                <a onclick="change('pr1')" href="#" >Try to grow plants</a>
+            </label>
+        </div>
+        <div id="pr1">
+            <label>
+                Even though you have the seeds, you don't have the soil, and martain soil takes a lot of time to proccess...<br>
+                But no need to worry! An adult human can survive for up to 1 month without food, and we should have some food ready before then, 
+                but there is still one problem; The colonists need meet along with plants in thier diets, and meat is a primary source of protien 
+                and iron which the colonists need.
+                <br><br>
+                Task:<br>
+                Get meat into the colonist's diets.
+                <br><br>
+                <a href="#" onclick="change('pr2')">Send a resupply rocket to mars with fish, seaweed, and more water</a>
+            </label>
+        </div>
+        <div id="pr2">
+            <label>
+                The rocket will arrive in 6 months.<br>
+                Your colonists sent the rover to do some exploring and it soon finds a very odd-looking rock.
+                <br><br>
+                Task:<br>
+                What to do with the rock?
+                <br><br>
+                <a onclick="change('pr2s1')" href="#" >Send back a sample</a><br>
+                <a onclick="change('pr3')" href="#" >Ignore it</a>
+            </label>
+        </div>
+        <div id="pr2s1">
+            <label>
+                Your 2 scientists don't have the propper tools to fully examine the sample so you store it somewhere safe.<br>
+                They will send it to earth when the rocket arrives for propper examination.
+                <br><br>
+                <a href="#" onclick="change('pr3')">Next</a>
+            </label>
+        </div>
+        
+        <div id="early">
+            <label>
+                Sorry! This is not available in early version. The full version is coming soon...
+            </label>
+        </div>
+        <div id="pr3">
+            <label>
+                Several days pass on Mars until it is day 25. The soil proccessing is complete! 
+                In a few day the newly-planted seeds should be ready for harvest. Just then, a meteor strikes right next to the base camp!
+                <br><br>
+                Task:<br>
+                What to do with the meteorite?
+                <br><br>
+                <a onclick="change('pr3s1')" href="#" >Collect a sample</a><br>
+                <a onclick="change('pr4')" href="#" >Ignore it</a>
+            </label>
+        </div>
+        <div id="pr3s1">
+            <label id="pr3s1L">
+                Your 2 scientists don't have the propper tools to fully examine the sample so you store it somewhere safe.<br>
+                They will send it to earth when the rocket arrives for propper examination.
+                <br><br>
+                <a href="#" onclick="change('pr4')">Next</a>
+            </label>
+        </div>
+        <div id="pr4">
+            <label>
+                Several more days pass. Your colonists enjoy their first martain-grown meal. The resupply rocket arrives.
+                <br><br>
+                <a href="#" onclick="change('pr5')">Unload the rocket</a>
+            </label>
+        </div>
+        <div id="pr5">
+            <label>
+                Along with the fish, the rocket has a another year of oxygen and enough fuel to send back both rockets.
+                <br><br>
+                <a href="#" id="pr5N" onclick="change('pr6')">Next</a>
+            </label>
+        </div>
+        <div id="pr5s1">
+            <label id="pr5s1L">
+                
+                <br><br>
+                <a href="#" onclick="change('pr6')">Next</a>
+            </label>
+        </div>
+        <div id="pr6">
+            <label>
+                The rockets were sent back to earth.
+                <br><br>
+                <a href="#" onclick="change('early')">Next</a>
+            </label>
+        </div>
+    </body>
+    <script>
+        var info = {
+            rock: false,
+            meteorite: false,
+            funds: 0
+        }
+        var change = function(divId){
+            var divs = document.getElementsByTagName("div");
+            for(var i=0; i<divs.length; i++){
+                divs[i].style.visibility = "hidden";
+            }
+            var showdiv= document.getElementById(divId);
+            showdiv.style.visibility = "visible";
+            showdiv.style.position = "absolute";
+            showdiv.style.top = "5px";
+            document.body.style.backgroundColor = "black";
+            switch(divId){
+                case "pr2s1":
+                    info.rock = true;
+                case "pr3s1":
+                    info.meteorite = true;
+                    if(info.rock==true){
+                        document.getElementById("pr3s1L").innerHTML = "Just as with the rock, your scientists will send it back to earth for propper examination.<br><br><a href='#' id='pr5s1N'>Next</a>"
+                        document.getElementById("pr3s1L").setAttribute("onclick", "change('pr4')");
+                    }
+                case "pr5":
+                    
+                    if(info.rock || info.meteorite){
+                        document.getElementById("pr5N").setAttribute("onclick", "change('pr5s1')");
+                        if(info.rock && info.meteorite){
+                            document.getElementById("pr5s1L").innerHTML = "They put the rock and the meteorite in the rockets to send back.<br><br><a href='#' id='pr5s1N'>Next</a>"
+                            info.funds = 120;
+                        }else if(info.rock){
+                            document.getElementById("pr5s1L").innerHTML = "They put the rock in one of the rockets to send back.<br><br><a href='#' id='pr5s1N'>Next</a>"
+                            info.funds = 100;
+                        }else{
+                            info.funds = 20;
+                            document.getElementById("pr5s1L").innerHTML = "They put the meteorite in one of the rockets to send back.<br><br><a href='#' id='pr5s1N'>Next</a>"
+                        }
+                    }
+                    
+                default:
+                    break;
+            }
+        }
+    </script>
+</html>
